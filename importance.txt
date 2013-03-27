@@ -1,0 +1,15 @@
+Please mark how important each attribute is to you when rating a restaurant [Speed]	9
+Please mark how important each attribute is to you when rating a restaurant [Price]	15
+Please mark how important each of these features are to you [Mark helpful reviews]	19
+Please mark how important each attribute is to you when rating a GF grocery product [Price]	21
+Please mark how important each of these features are to you [Bookmark products/restaurants]	22
+Please mark how important each attribute is to you when rating a GF grocery product [Texture]	24
+Please mark how important each of these features are to you [Search by ratings]	24
+Please mark how important each attribute is to you when rating a GF grocery product [Quality]	25
+Please mark how important each attribute is to you when rating a GF grocery product [GF Reliability]	35
+Please mark how important each attribute is to you when rating a restaurant [GF Menu Variety]	35
+Please mark how important each attribute is to you when rating a restaurant [Server's GF knowledge]	36
+Please mark how important each attribute is to you when rating a GF grocery product [Taste]	36
+Please mark how important each attribute is to you when rating a restaurant [Overall Quality]	37
+Please mark how important each of these features are to you [Search near you]	37
+Please mark how important each attribute is to you when rating a restaurant [GF Reliability]	44
