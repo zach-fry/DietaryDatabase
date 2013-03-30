@@ -1,0 +1,50 @@
+body {}
+html {}
+
+div.sign-in {
+    position : absolute;
+    right : 0;
+    left: 0;
+    top: 0;
+    bottom: auto;
+    background-color: #CCCCCC;
+    border: 1px solid #000000;
+    text-align: right;
+}
+
+div.main-screen {
+    position : absolute;
+    top: 20px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    border: 1px solid #000000;
+    background-color: #888888;
+    padding: 10px;
+}
+
+#logo {
+    width: 600px;
+    height: 200px; 
+    border: 1px solid #000000;
+    display: block;
+    margin-left: auto; 
+    margin-right : auto;
+}
+
+#grocery_products {
+    background : #DE0052;
+    color : #FFFFFF;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#restaurants {
+    background : #4C10AE;
+    color : #FFFFFF;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
