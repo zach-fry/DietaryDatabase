@@ -3,8 +3,8 @@ html {}
 
 div.main-screen {
     position : absolute;
-    left: 0px;
-    right: 0px;
+	left: 0px;
+	right: 0px;
     top: 0px;
     bottom: 0px;
     background-color: #FFFFFF;
@@ -13,43 +13,43 @@ div.main-screen {
 
 div.sign-in {
     position : fixed;
-    left: 0;
-    right: 0;
+	left: 0;
+	right: 0;
     top: 0;
     bottom: auto;
     border: 1px solid #000000;
     background-color: #CCCCCC;
     text-align: right;
-    z-index: 100;
+	z-index: 100;
 }
 
 div.search-results-box{
     position : relative;
     left: auto;
     right: auto;
-    bottom: 0px;
-    top: 0px;
+	bottom: 0px;
+	top: 0px;
     border: 1px solid #000000;
     background-color: #880088;
-    overflow: auto;
+	overflow: auto;
 }
 
 div.search-results {
     position:relative;
     top: auto;
     left: 0px;
-    height: 150px;
+	height: 150px;
     padding: 10px;
-    overflow: auto;
+	overflow: auto;
 }
 
 div.result-text {
     position:absolute;
     top: 0;
     left: 160px;
-    height: 150px;
+	height: 150px;
     padding: 10px;
-    overflow: auto;
+	overflow: auto;
 }
 
 #grocery-pic {
