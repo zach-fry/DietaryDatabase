@@ -51,65 +51,65 @@
 
 	if ( !isset ( $_GET['section'] ) )
 		require ( './views/homepage.php' );
-
-	switch ( $_GET['section'] ) {
-
-	case 'grocery':
-            if ( !isset ( $_GET['action'] ) )
-                require ( './views/grocery_index.php' );
-            else {
-                switch ( $_GET['action'] ) {
-                    case 'recent':
-                        require ( './views/grocery_index.php' );
-                    break;
-                    case 'most_reviewed':
-                        require ( './views/grocery_most_reviewed.php' );
-                    break;
-                    case 'highest_rated':
-                        require ( './views/grocery_highest_rated.php' );
-                    break;
-                    default:
-                        if ( is_int( intval( $_GET['action'] ) ) ) {
-                            require ( '/./views/grocery.php' );
-                        }
-                    break;
+    else {
+        switch ( $_GET['section'] ) {
+            case 'grocery':
+                if ( !isset ( $_GET['action'] ) )
+                    require ( './views/grocery_index.php' );
+                else {
+                    switch ( $_GET['action'] ) {
+                        case 'recent':
+                            require ( './views/grocery_index.php' );
+                        break;
+                        case 'most_reviewed':
+                            require ( './views/grocery_most_reviewed.php' );
+                        break;
+                        case 'highest_rated':
+                            require ( './views/grocery_highest_rated.php' );
+                        break;
+                        default:
+                            if ( is_int( intval( $_GET['action'] ) ) ) {
+                                require ( './views/grocery.php' );
+                            }
+                        break;
+                    }
                 }
-            }
-		break;
+                break;
 
-		case 'restaurant':
-            if ( !isset ( $_GET['action'] ) )
-                require ( './views/restaurant_index.php' );
-            else {
-                switch ( $_GET['action'] ) {
-                    case 'recent':
+                case 'restaurant':
+                    if ( !isset ( $_GET['action'] ) )
                         require ( './views/restaurant_index.php' );
-                    break;
-                    case 'most_reviewed':
-                        require ( './views/restaurant_most_reviewed.php' );
-                    break;
-                    case 'highest_rated':
-                        require ( './views/restaurant_highest_rated.php' );
-                    break;
-                    default:
-                        if ( is_int( intval( $_GET['action'] ) ) ) {
-                            require ( '/./views/restaurant.php' );
+                    else {
+                        switch ( $_GET['action'] ) {
+                            case 'recent':
+                                require ( './views/restaurant_index.php' );
+                            break;
+                            case 'most_reviewed':
+                                require ( './views/restaurant_most_reviewed.php' );
+                            break;
+                            case 'highest_rated':
+                                require ( './views/restaurant_highest_rated.php' );
+                            break;
+                            default:
+                                if ( is_int( intval( $_GET['action'] ) ) ) {
+                                    require ( './views/restaurant.php' );
+                                }
+                            break;
                         }
-                    break;
-                }
-            }
-		break;
+                    }
+                break;
 
-        case 'user':
-            require ( './views/user.php' );
-        break;
-        
-        case 'company':
-            require ( './views/company_index.php' );
-        break;
+                case 'user':
+                    require ( './views/user.php' );
+                break;
+                
+                case 'company':
+                    require ( './views/company_index.php' );
+                break;
 
-        default:
-        break;
-	}
+                default:
+                break;
+        }
+    }
 
 ?>

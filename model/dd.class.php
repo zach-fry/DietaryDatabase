@@ -20,21 +20,27 @@
 
 	}
 
-	public function getRestaurants ( $search_term, $order_by, $num ) {
+	public function getRestaurants ( $search_term='', $order_by='', $num=0 ) {
 
 		// FUCK IT.
 
-		$q = "select `restaurant`.*, avg ( `r_comment`.`r_serv` ) as service, avg ( `r_comment`.`r_qual` ) as quality, avg ( `r_comment`.`r_pric`) as price, avg ( `r_comment`.`r_gfrel` ) as reliability
-from `restaurant`
-join `r_comment` on `restaurant`.`id` = `r_comment`.`restaurant`
-group by `restaurant`.`id`
-order by service
-limit 50";
-		$this->db->q ( $q );
-		if ( $this->db->num() )
-			return $this->db->pop_all();
-		return FALSE;
+        $q = " 
+SELECT r.`id` , r.`blurb` , r.`name` AS name, 0 AS avg_serv, 0 AS avg_qual, 0 AS avg_pric, 0 AS avg_gfrel
+FROM `restaurant` r
+LEFT OUTER JOIN `r_comment` c ON r.`id` = c.`restaurant`
+WHERE c.`id` IS NULL
+UNION
+SELECT r.`id` , r.`blurb` , r.`name` AS name, avg( c.`r_serv` ) AS avg_serv, avg( c.`r_qual` ) AS avg_qual, avg( c.`r_pric` ) AS avg_pric, avg( c.`r_gfrel` ) AS avg_gfrel
+FROM `restaurant` r, `r_comment` c
+WHERE r.`id` = c.`restaurant` 
+            ";
+    
 
+        if ( !$this->db->q ( $q ) ) {
+            return array();
+        }
+
+        return $this->db->pop_all();
 	}
         
 

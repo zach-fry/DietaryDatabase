@@ -17,10 +17,10 @@
 				<h2>Snappy tagline.</h2>
 			</hgroup>
 			<nav>
-				<a href="#">Home</a>
-				<a href="#">Restaurants</a>
-				<a href="#">Groceries</a>
-				<a href="#">My Profile</a>
+				<a href="/">Home</a>
+				<a href="/restaurant">Restaurants</a>
+				<a href="/grocery">Groceries</a>
+				<a href="/user">My Profile</a>
 				<a href="#">About</a>
 			</nav>
 			<form name="main_search" id="main_search" method="GET" action="/search">

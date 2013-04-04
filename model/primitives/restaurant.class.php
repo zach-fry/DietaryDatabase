@@ -7,8 +7,8 @@
         public $website;
         public $phone;
         public $address;
-        public $lat;
-        public $long;
+        public $geo_lat;
+        public $geo_long;
         public $menu_url;
         public $thumbnail;
         public $blurb;
@@ -76,6 +76,37 @@
 			return FALSE;
 
 		}
+
+	}
+
+	public function getById ( $id ) {
+
+		$q = "select * from `restaurant` where id = $id limit 1";
+		$this->db()->q( $q, $id );
+		if ( !$this->db()->num() ) return false;
+
+		$res = $this->db()->pop();
+		$this->id = $res['id'];
+		$this->name = $res['name'];
+		$this->website = $res['website'];
+		$this->phone = $res['phone'];
+		$this->address = $res['address'];
+		$this->geo_lat = $res['geo_lat'];
+		$this->geo_long = $res['geo_long'];
+		$this->menu_url = $res['menu_url'];
+		$this->thumbnail = $res['thumbnail'];
+		$this->blurb = $res['blurb'];
+
+		$this->save();
+		return TRUE;
+
+	}
+
+	public function getRatings () {
+
+		if ( !isset ( $this->id ) ) return array();
+		
+		
 
 	}
 

@@ -92,7 +92,8 @@
 			$this->qs = $qs;
 			
 			$this->res = @mysql_query ( $qs, $this->dh );
-			if ( $this->res == FALSE ) {
+			if ( $this->res === FALSE ) {
+                echo mysql_error();
 				$this->status = 0;
 				return false;
 			}
@@ -123,7 +124,7 @@
 			// in this case, just pass it along
 
 			if ( $na == 1 )
-				return $this->_q ( $this->clean ( $qs ) );
+				return $this->_q ( $input[0] );
 			
 			// otherwise, assume an array whose first element represents
 			// the skeleton for the query, and each element after corresponds

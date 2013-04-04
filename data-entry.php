@@ -45,7 +45,7 @@
 
     echo "<pre>";
 
-    $fc = count(glob('/var/www/views/img/thumbs/' . '*'));
+    $fc = count(glob('/var/www/views/img/r_thumbs/' . '*'));
 
     $row = 1;
     if (($handle = fopen("Sheet1.csv", "r")) !== FALSE) {
@@ -61,7 +61,7 @@
 
                 $thumb_url = $data[9];
                 $img = file_get_contents($thumb_url);
-                $img_path = '/var/www/views/img/thumbs/'.$fc.'.jpg';
+                $img_path = $fc.'.jpg';
                 file_put_contents($img_path, $img);
                 $fc += 1;
 
