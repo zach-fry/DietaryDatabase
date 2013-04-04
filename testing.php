@@ -1,13 +1,13 @@
 <?php
 /*
-	header ( 'Content-type: text/plain' );
-	echo file_get_contents ( './model/mysqldb.class.php' );
+	header ( "Content-type: text/plain" );
+	echo file_get_contents ( "./model/mysqldb.class.php" );
 */
 
-	ini_set ( 'display_errors', 1 );
-    include ( 'index.php' );
+	header ( "Content-type: text/plain" );
+	include ( "index.php" );
 
-    $c = new Company ();
-
+	$db = DB::getInstance();
+	echo ( $db->is_okay() ? 'okay()' : 'not okay()' ) . "\n";
 
 ?>

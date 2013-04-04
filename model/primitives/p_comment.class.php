@@ -1,5 +1,8 @@
 <?php
 
+	// dumb object, operated exclusively upon by User's
+	// createProductComment() and deleteProductComment()
+
     class ProductComment extends Primitive {
 
         public $id;

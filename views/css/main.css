@@ -1,0 +1,124 @@
+
+	/* "jars of clay" */
+
+	* { font-family: 'Open Sans', sans-serfif; }
+	.centered { text-align: center; }
+
+
+	a { color: inherit; }
+	a:hover { text-decoration: none; }
+
+	html {
+		margin: 20px 150px;
+		background-color: #F2F2E9;
+		color: #111;
+	}
+
+	body > header {
+		background-color: #734854;
+		color: #EEE;
+		padding: 15px 15px 0 15px;
+	}
+
+	body > header hgroup * {
+		margin: 0;
+	}
+
+	body > header hgroup h2 {
+		font-size: 14px;
+		font-style: italic;
+		font-weight: normal;
+		letter-spacing: 0.1em;
+	}
+
+	body > header > nav {
+		background-color: #A69580;
+		color: inherit;
+		display: block;
+		margin: 10px -15px 0 -15px;
+		overflow: auto;
+	}
+
+	body > header > nav > a {
+		display: block;
+		width: 12%;
+		float: left;
+		margin-right: 10px;
+		padding: 10px;
+		text-decoration: none;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	body > header > nav > a:hover {
+		background-color: #F2F2E9;
+		color: #222;
+	}
+
+	body > header > nav > a:active {
+		color: #736766;	
+	}
+
+	#main_search {
+		position: absolute;
+		top: 50px;
+		right: 200px;
+	}
+
+	#main_search input[type="text"] {
+		font-size: 14px;
+		background-color: transparent;
+		color: #EEE;
+		border: 1px solid #999;
+		padding: 10px;
+		width: 250px;
+	}
+
+	body > footer {
+		font-size: 10px;
+		color: #555;
+		text-align: right;
+		padding: 25px 10px;
+	}
+
+	/* TABULAR LISTINGS */
+
+	.tablist { border-collapse: collapse; font-size: 85%; }
+
+	.tablist tr { padding: 5px; }
+
+	.tablist tr:hover {
+		cursor: pointer;
+		background-color: #CCC;
+	}
+
+	.tablist td { padding: 10px; }
+
+	.tablist thead {
+		background-color: #736766;
+		color: #EEE;
+		font-size: 14px;
+	}
+
+	.tablist > thead th { padding: 20px 8px !important; }
+	.tablist thead tr:hover { cursor: auto; background-color: inherit; }
+
+	.tablist-loc { width: 15%; }
+	.tablist-w45 { width: auto; }
+
+	tbody .tablist-rating {
+		font-size: 36px;
+		text-align: center;
+		font-weight: bold;
+		width: 10%;
+	}
+
+	.tablist a {
+		font-weight: bold;
+		text-decoration: none;
+	}
+
+	.relative-distance {
+		color: #444;
+		font-style: italic;
+	}

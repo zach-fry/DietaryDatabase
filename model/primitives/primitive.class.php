@@ -33,6 +33,18 @@
 
         }
 
+	public function is_empty () {
+
+		return $this->fingerprint != NULL;
+
+	}
+
+	public function clear () {
+
+		$this->fingerprint = NULL;
+
+	} 
+
         public function modified () {
 
             // compute the fingerprint the same way as 
@@ -43,7 +55,7 @@
 
             ksort ( $vars );
 
-            return md5 ( serialize ( $vars ) ) == $this->fingerprint;
+            return md5 ( serialize ( $vars ) ) != $this->fingerprint;
 
         }
 

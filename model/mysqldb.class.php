@@ -18,9 +18,9 @@
 
 		public static $dh = NULL;
 
-		public static function setup ( $host, $user, $pass, $db ) {
+		public static function setup ( $host, $user, $pass, $db = NULL ) {
 
-            self::$dh = new MySQLDB ( $host, $user, $pass, $db );
+	            self::$dh = new MySQLDB ( $host, $user, $pass, $db );
 
 		}
 
@@ -47,6 +47,7 @@
 			
 			$this->status = 1;
 			$this->db_sel = "";
+			$this->qs = "";
 		
 			// Try to connect!
 			
@@ -56,6 +57,8 @@
 			if ( $db )
 				if ( ! ( @mysql_select_db ( $db, $this->dh ) ) ) {
 					$this->status = 0;
+					
+				} else {
 					$this->db_sel = $db;
 				}
 				
@@ -74,26 +77,20 @@
 		}
 		
 		public function _q ( $qs ) {
-		
+
 			// Perform a query.
-		
-			// Which direction is the result of this query going in? 
-			// Should we use mysql_num_rows() or mysql_affected_rows()?
-			
-			$qRet = !preg_match ( "/[insert|update|delete|drop]/i", substr ( $qs, 0, 8 ) );
-		
-			// Use a simple replacement pattern to insert dynamic values on-the-fly: a pound-sign (#)
-			
-			$args = func_get_args();
-			$num_args = count ( $args );
-			if ( $num_args > 1 )
-				for ( $i = 1; $i < $num_args; $i++ ) {
-					$qs = preg_replace ( "/\#/", $args[$i], $qs, 1 );
-				}
+
+			// Determine the direction in which the query's going:
+			// insert/update/drop/delete's are inward,
+			// select is outward
+
+			$qRet = !preg_match ( 
+				"/[insert|update|delete|drop]/i", 
+				substr ( $qs, 0, 8 ) 
+			);
 			
 			$this->qs = $qs;
 			
-			unset ( $this->res );
 			$this->res = @mysql_query ( $qs, $this->dh );
 			if ( $this->res == FALSE ) {
 				$this->status = 0;
@@ -109,22 +106,45 @@
 		
 		}
 		
-		public function q ( $qs ) {
+		public function q () {
+
 		
-			// Clean arguments, then perform the query.
+			// Clean arguments, string it togehter, then 
+			// pass it to _q() to perform the query.
 			
 			$input = func_get_args();
 			$na = func_num_args();
-			
+
+			// case: given nothing
+
+			if ( $na == 0 ) return FALSE;
+	
+			// if passed a string, assume it represents the entire query
+			// in this case, just pass it along
+
 			if ( $na == 1 )
 				return $this->_q ( $this->clean ( $qs ) );
 			
-			for ( $i = 1; $i < $na; $i++ )
+			// otherwise, assume an array whose first element represents
+			// the skeleton for the query, and each element after corresponds
+			// to a marker symbol within it.
+
+			// in this case, we'll clean() each subsequent argument and
+			// preg_replace() them into it and then pass the resultant
+			// string to _q() for querying.
+
+			// Use a simple replacement pattern to insert dynamic 
+			// values on-the-fly: a question mark (?)
+
+			for ( $i = 1; $i < $na; $i++ ) {
 				$input[$i] = $this->clean ( $input[$i] );
+				$input[0] = preg_replace ( "/\?/", $input[$i], $input[0], 1 );
+			}
+
 				
 			// Pass to _q()
 				
-			return $this->_q ( $input );
+			return $this->_q ( $input[0] );
 		
 		}
 		
