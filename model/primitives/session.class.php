@@ -1,5 +1,7 @@
 <?php
 
+	session_start();
+
 	class Session {
 
 		// automatically try to pull token from cookie
@@ -7,10 +9,22 @@
 
 		public function Session () {
 
+			// if session already exists, quit
+
+			if ( isset ( $_SESSION['id'] ) ) return;
+
+			// if session doesn't exist and no token to pull from, quit
+
 			if ( !isset ( $_COOKIE['token'] ) ) return;
+
+			// session not set, but cookie is,
+			// try to locate that one and revive it.
 
 			$q = "select * from `sessions` where token = '?' and timestamp < ? limit 1";
 			$this->db()->q( $q, $_COOKIE['token'], time() - 2419200 );
+
+			// no session like that in our records, quit.
+
 			if ( !$this->db()->num() ) return;
 
 			// grab user id, query again for User stuff,
@@ -20,7 +34,11 @@
 			$q = "select * from `user` where id = ? limit 1";
 			$this->db()->q ( $q, $s['user'] );
 
+			// found the session, but user doesn't exist, quit.
+
 			if ( !$this->db()->num() ) return;
+
+			// glob to session
 
 			$_SESSION['user'] = $this->db()->pop();
 
@@ -58,6 +76,12 @@
 			setcookie ( "token", ":^)", time() - 30 );
 
 			// remove session row? too lazy. let it stay.	
+
+		}
+
+		public function isLoggedIn () {
+
+			return isset ( $_SESSION['user']['id'] );	
 
 		}
 

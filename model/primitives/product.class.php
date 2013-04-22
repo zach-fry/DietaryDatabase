@@ -7,19 +7,20 @@
         public $company;
         public $thumbnail;
         public $description;
+        public $tags;
 
-	public function create ( $name, $company, $thumbnail, $description ) {
+	public function create ( $name, $company, $thumbnail, $description, $tags ) {
 
-		$qr = "insert into `product` ( name, company, thumbnail,
-			description ) values ( '?', ?, '?', '?' ) ";
+		$qr = "insert into `product` ( name, company, thumbnail, description, tags ) values ( '?', '?', '?', '?', '?' ) ";
 
-		if ( $this->db()->q( $qr, $name, $company, $thumbnail, $description ) ) {
+		if ( $this->db()->q( $qr, $name, $company, $thumbnail, $description, $tags ) ) {
 
 			$this->id = $this->db()->last_inserted();
 			$this->name = $name;
 			$this->company = $company;
 			$this->thumbnail = $thumbnail;
-			$this->description = $description;
+            $this->description = $description;
+            $this->tags = $tags;
 
 			$this->save();
 			return TRUE;
@@ -44,14 +45,15 @@
 		if ( !$this->modified() ) return TRUE;
 
 		$qr = "update `product` set name = '?', company = ?,
-			thumbnail = '?', description = '?' limit 1 ";
+			thumbnail = '?', description = '?', tags = ? limit 1 ";
 
 		if ( $this->db->q ( 
 			$qr,
 			$this->name,
 			intval ( $this->company ),
 			$this->thumbnail,
-			$this->description )
+            $this->description,
+            $this->tags )
 		) {
 
 			$this->save();
@@ -75,10 +77,12 @@
 		if ( $this->db()->q ( $q, $id ) ) {
 
 			$r = $this->db()->pop();
+            $this->id = $r['id'];
 			$this->name = $r['name'];
 			$this->company = intval ( $r['company'] );
 			$this->thumbnail = $r['thumbnail'];
 			$this->description = $r['description'];
+            $this->tags = $r['tags'];
 
 			$this->save();
 			return TRUE;
@@ -89,6 +93,18 @@
 
 		}
 
+	}
+
+	public function getRatings () {
+		if ( !isset ( $this->id ) ) return array();
+        $q = "select avg(c.`p_text`) as text, avg(c.`p_qual`) as qual, avg(c.`p_gfre`) as gfre 
+              from `p_comment` c where product = $this->id";
+        $this->db()->q( $q );
+        if (!$this->db()->num() ) return array();
+
+
+        $res = $this->db()->pop();
+        return $res;
 	}
 
 	public function delete () {
@@ -111,7 +127,19 @@
 
 	}
 
-	// public function getComments()
+    public function getReviews() {
+        if ( !isset ( $this->id ) ) return array();
+        $q = "
+            select c.`id` as pid, c.`author` as author, c.`timestamp` as timestamp, c.`p_text` as text, c.`p_qual` as qual, c.`p_gfre` as gfre, c.`comment_text` as comment_text
+            from `p_comment` c
+            where c.`product` = $this->id 
+        ";    
+        $this->db()->q( $q );
+        if (!$this->db()->num() ) return array();
+        $res = $this->db()->pop_all();
+        return $res;
+    }
+
 
     };
 

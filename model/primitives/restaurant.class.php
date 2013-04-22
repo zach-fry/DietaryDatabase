@@ -103,15 +103,26 @@
 	}
 
 	public function getRatings () {
-
 		if ( !isset ( $this->id ) ) return array();
-		
-		
-
+        $q = "select avg(c.`r_serv`) as serv, avg(c.`r_qual`) as qual, avg(c.`r_pric`) as pric, avg(c.`r_gfrel`) as gfrel from `r_comment` c where restaurant = $this->id";
+        $this->db()->q( $q );
+        if (!$this->db()->num() ) return array();
+        $res = $this->db()->pop();
+        return $res;
 	}
 
-	// public function getComments()
+    public function getReviews() {
+        if ( !isset ( $this->id ) ) return array();
+        $q = "
+            select c.`id` as cid, c.`author` as author, c.`timestamp` as timestamp, c.`r_serv` as serv, c.`r_qual` as qual, c.`r_pric` as pric, c.`r_gfrel` as gfrel, c.`comment_text` as comment_text, c.`tags` as tags
+            from `r_comment` c
+            where c.`restaurant` = $this->id 
+        ";    
+        $this->db()->q( $q );
+        if (!$this->db()->num() ) return array();
+        $res = $this->db()->pop_all();
+        return $res;
+    }
 
-	}
-
+    };
 ?>

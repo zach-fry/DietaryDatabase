@@ -18,8 +18,8 @@
 		$salt_bank = "abcdefghijklmABCDEFGHIJKLM123457890~!@#$%^&";
 		$salt = "";
 		for ( $i = 0; $i < 64; $i++ )
-			$salt += substr ( $salt_bank, rand ( 0, strlen ( $salt_bank ), 1 ) );
-		$password = sha512 ( $salt . $p );
+			$salt .= substr ( $salt_bank, rand ( 0, strlen ( $salt_bank ) - 1 ), 1 );
+		$password = hash ( "sha512",  $salt . $p );
 
 		// attempt to insert
 
@@ -29,7 +29,9 @@
 			$e, $u, $salt, $password, $a, $g, $b ) )
 
 			return false;
-
+/*
+		echo "<pre>USER.CLASS.PHP: USER CREATED, \nPASS IS $password\n SALT IS $salt</pre>";
+*/
 		// set values
 
 		$this->id = $this->db()->last_inserted();
@@ -73,14 +75,14 @@
 
 	public function getByUsername ( $username ) {
 
-		$q = "select * from `users` where username = '?' limit 1";
+		$q = "select * from `user` where username = '?' limit 1";
 		if ( !$this->db()->q ( $q, $username ) )
 			return FALSE;
 		$res = $this->db()->pop();
 
 		$this->id = $res['id'];
 		$this->email = $res['email'];
-		$this->username = $res['name'];
+		$this->username = $res['username'];
 		$this->salt = $res['salt'];
 		$this->password = $res['password'];
 		$this->avatar = $res['avatar'];
@@ -111,7 +113,7 @@
 
 	}
 
-	public function getFavoriteProducts ( $num = 50 ) {
+	public function getFavoriteProducts ( $num = 5 ) {
 
 		$q = "select * from `p_favorite` where user = ? limit ?";
 		$this->db()->q( $this->id, $num );
@@ -146,7 +148,22 @@
 
 	}
 
-	// public function getFavoriteRestaurants ())
+	public function getFavoriteRestaurants ( $num = 5 ) {
+
+		$q = "select * from r_favorite where user = ? limit ?";
+		$this->db()->q ( $this->id, $num );
+		$retval = array();
+		if ( !$this->db()->num() ) return $retval;
+		
+		while ( $result = $this->db()->pop() ) {
+			$r = new Restaurant ();
+			if ( $r->getById ( $result['restaurant'] ) )
+				$retval .= $r;
+		}
+
+		return $retval;
+
+	}
 
 	public function addProductComment ( $texture, $quality, $gfre, $text ) {
 
@@ -202,8 +219,15 @@
 	}
 
 	public function password_is ( $p ) {
-
-		return sha512 ( $p . $this->salt ) == $this->password;
+/*
+		echo "<pre>";
+		echo "PROVIDED PASSWORD: $p\n";
+		echo "SALT: {$this->salt}\n";
+		echo "HASHED RESULT: " .  hash ( "sha512", $this->salt . $p ) . "\n";
+		echo "STORED HASH: " . $this->password . "\n";
+		echo "</pre>";
+*/
+		return hash ( "sha512", $this->salt . $p ) == $this->password;
 
 	}
 

@@ -99,7 +99,7 @@
 			}
 			
 			if ( $qRet )
-				$this->num = mysql_num_rows ( $this->res );
+				$this->num = @mysql_num_rows ( $this->res );
 			else
 				$this->num = mysql_affected_rows ();
 				
@@ -237,7 +237,7 @@
 				}
 				return $out;
 			} else {
-				return null;
+				return array();
 			}
 
 		}
@@ -264,7 +264,7 @@
 		
 			// Release result of last query.
 			
-			if ( is_resource ( $this->res ) )
+			if ( isset ( $this->res ) && is_resource ( $this->res ) )
 				mysql_free_result ( $this->res );
 		
 		}
