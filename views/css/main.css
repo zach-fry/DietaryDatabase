@@ -45,9 +45,9 @@
 		overflow: auto;
 	}
 
-	body > header > nav > a {
+	body > header > nav a {
 		display: block;
-		width: 12%;
+		width: 10%;
 		float: left;
 		margin-right: 10px;
 		padding: 10px;
@@ -56,13 +56,19 @@
 		font-weight: bold;
 	}
 
-	body > header > nav > a:hover {
+	body > header > nav a:hover {
 		background-color: #F2F2E9;
 		color: #222;
 	}
 
-	body > header > nav > a:active {
+	body > header > nav a:active {
 		color: #736766;	
+	}
+
+	body > header > nav > .user-nav a {
+
+		float: right;
+
 	}
 
 	#main_search {
@@ -124,6 +130,14 @@
 		text-decoration: none;
 	}
 
+    .review-list { border: 1px solid rgba(100,100,100,0.5); border-collapse: collapse;}
+    .review-header { border: 1px solid rgba(100,100,100,0.5); }
+
+    .user-col  { width: 20%; border: 1px solid rgba(100,100,100,0.5); }
+    .review-col { width: 60%; border: 1px solid rgba(100,100,100,0.5); }
+    .rating-col { width: 7%; border: 1px solid rgba(100,100,100,0.5); }
+
+
 	.relative-distance {
 		color: #444;
 		font-style: italic;
@@ -150,7 +164,7 @@
 		max-width: 50%;
 	}
 
-	.rating-box-container {
+	.rating-box-container .reviews-container {
 		overflow: auto;
 	}
 
@@ -182,3 +196,37 @@
 		font-size: 16px;
 		padding: 10px;
 	}
+    
+	/* form stuff */
+
+	form.full-width {
+		width: 45%;
+	}
+	
+	form label {
+		font-weight: bold;
+		display: block;
+		padding: 8px 8px 8px 0;
+	}
+	
+	form input {
+		padding: 8px;
+		width: 125%; 
+	}
+
+	a.button {
+		padding: 8px;
+		margin-top: 10px;
+		background-color: #736766;
+		text-decoration: none;
+		font-weight: bold;
+		color: #fff;
+		width: 80%;
+		display: block;
+	}
+
+	a.button:hover {
+		background-color: #999;
+	}
+
+
