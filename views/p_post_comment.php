@@ -12,8 +12,11 @@
         $qual = $_POST['p_qual'];
         $gfre = $_POST['p_gfre'];
         $timestamp = time();
-        $author = 0;
-        //$author = {INSERT USER ID HERE}
+        if (!isset($_SESSION['user'])) {
+            $author = 0;
+        } else {
+            $author = $_SESSION['user']->id;
+        }
 
 
         $pc->create($author, $id, $timestamp, $txture, $qual, $gfre, $text); 

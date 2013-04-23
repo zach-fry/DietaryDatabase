@@ -56,7 +56,19 @@
                     <tbody>
                         <tr>
                         <?php foreach ( $r->getReviews() as $rc ) { ?>
-                            <td class="user-col"><?php echo "Anon"; ?></td>
+                            <td class="user-col">
+                            <?php 
+                                if($rc['author'] == 0) echo 'Anon';
+                                else {
+                                    $u = new User;
+                                    $u->getById($rc['author']);
+                                    echo ($rc['author']);
+                                    //print_r($u);
+                                    //echo $u->username; 
+                                }
+                            ?>
+                           
+                            </td>
                             <td class="review-col"><?php echo $rc['comment_text']; ?></td>
                             <td class="rating-col"><?php echo $rc['gfrel']; ?></td>
                             <td class="rating-col"><?php echo $rc['serv']; ?></td>

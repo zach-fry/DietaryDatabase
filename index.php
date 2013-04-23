@@ -20,6 +20,10 @@
     require ( '/var/www/model/primitives/user.class.php' );
     require ( '/var/www/model/primitives/session.class.php' );
 
+	// we pollute $_SESSION-space, so unset it pre-emptively
+
+	unset ( $_SESSION['req'] );
+
 	// M-M-M-Markdown
 
 	require ( '/var/www/includes/markdown.php' );
@@ -67,6 +71,9 @@
                         case 'highest_rated':
                             require ( './views/grocery_highest_rated.php' );
                         break;
+                        case 'post_comment':
+                            require ( './views/p_post_comment.php' );
+                        break;
                         default:
                             if ( is_int( intval( $_GET['action'] ) ) ) {
                                 require ( './views/grocery.php' );
@@ -90,6 +97,9 @@
                             case 'highest_rated':
                                 require ( './views/restaurant_highest_rated.php' );
                             break;
+                            case 'post_comment':
+                                require ( './views/r_post_comment.php' );
+                            break;
                             default:
                                 if ( is_int( intval( $_GET['action'] ) ) ) {
                                     require ( './views/restaurant.php' );
@@ -102,10 +112,84 @@
                 case 'user':
                     require ( './views/user.php' );
                 break;
+
+                case 'search':
+                    if (!isset ( $_POST['keywords'] ) ) {
+                        require ( './views/search_index.php' );
+                    } else {
+                        require ( './views/search_list.php' );
+                    }
+                break;
                 
                 case 'company':
                     require ( './views/company_index.php' );
                 break;
+
+                case 'register':
+                    
+                    // if trying to submit a register request,
+
+                    if ( isset ( $_POST ) && !empty ( $_POST ) ) {
+
+                        // do some preliminary checks
+
+                        if ( $_POST['password'] !== $_POST['password2'] ) {
+                            $_SESSION['req']['status'] = 0;
+                            $_SESSION['req']['message'] = "Password/confirmation mismatch.";
+                        }
+
+                        foreach ( $_POST as $p )
+                            if ( empty ( $p ) ) {					
+                                $_SESSION['req']['status'] = 0;
+                                $_SESSION['req']['message'] = "Not all fields completed.";
+                            }
+
+                        // pass it along to $site->register()
+
+                        // take its result and assign a flag to $_SESSION,
+                        // where ./views/register.php will display the 
+                        // appropriate message
+                        // (always invoke that view)
+                        
+                        if (  $site->registerUserAccount( $_POST['username'], $_POST['password'], $_POST['email'] ) ) {
+                            $_SESSION['req']['status'] = 1;
+                        }
+
+
+                    }
+
+                    require ( './views/register.php' );
+
+                break;
+
+                case 'login':
+
+                    if ( isset ( $_POST['user'] ) && isset ( $_POST['pass'] ) ) {
+                         $u = $site->userLogin ( $_POST['user'], $_POST['pass'] );
+                        if ( $u !== false ) {
+                            $site->user = $u;
+                            $_SESSION['user'] = $u;
+                            header ( "Location: /" );
+                        } else {
+                            $_SESSION['req']['status'] = 0;
+                            require ( './views/login.php' );
+                            break;
+                        }
+                    }
+                
+                    require ( './views/login.php' );
+
+                break;
+
+                case "logout":
+                    session_destroy();
+                    header ( "Location: /" );
+                break;
+
+                case 'test':
+                    require ( './views/dummy.php' );
+                break;
+
 
                 default:
                 break;

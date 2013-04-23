@@ -51,7 +51,19 @@
                     <tbody>
                         <tr>
                         <?php foreach ( $p->getReviews() as $pc ) { ?>
-                            <td class="user-col"><?php echo "Anon"; ?></td>
+                            <td class="user-col">
+                                <?php
+                                    if($pc['author'] == 0) echo 'Anon';
+                                    else {
+                                        $u = new User;
+                                        $u->getById($pc['author']);
+                                        echo ($pc['author']);
+                                        echo ($u->username);
+                                        //print_r($u);
+                                        //echo $u->username; 
+                                    }
+                                ?>
+                            </td>
                             <td class="review-col"><?php echo $pc['comment_text']; ?></td>
                             <td class="rating-col"><?php echo $pc['text']; ?></td>
                             <td class="rating-col"><?php echo $pc['qual']; ?></td>

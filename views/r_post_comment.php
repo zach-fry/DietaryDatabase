@@ -11,7 +11,12 @@
         $gfre = $_POST['r_gfre'];
         $pric = $_POST['r_pric'];
         $timestamp = time();
-        $author = 0;
+        if (!isset($_SESSION['user'])) {
+            $author = 0;
+        } else {
+            $author = $_SESSION['user']->id;
+        }
+        
         //$author = {INSERT USER ID HERE}
         
         $rc->create($author, $id, $timestamp, $serv, $qual, $pric, $gfre, $text); 

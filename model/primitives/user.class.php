@@ -5,7 +5,7 @@
         public $id;
         public $username;
         public $email;
-	public $salt;
+        public $salt;
         public $password;
         public $avatar;
         public $why_gf;
@@ -49,20 +49,18 @@
 
 	public function getById ( $id ) {
 
-		if ( !isset ( $id ) || !is_int ( $id ) )
-			return FALSE;
+		if ( !isset ( $id ) || !is_int ( $id ) ) return FALSE;
 
-		if (
-			!$this->db()->q ( 'select * from `user` where id = ? limit 1', $id ) ||
-			!$this->db()->num()
-		   )
-			return FALSE;
+        $q =  "select * from `user` where id = $id limit 1";
+        $this->db()->q($q, $id);
+        if ( !$this->db()->num() ) {
+           return FALSE;
+        }
 
-		$res = $this->db->pop();
-
+		$res = $this->db()->pop();
 		$this->id = $res['id'];
 		$this->email = $res['email'];
-		$this->username = $res['name'];
+		$this->username = $res['username'];
 		$this->salt = $res['salt'];
 		$this->password = $res['password'];
 		$this->avatar = $res['avatar'];

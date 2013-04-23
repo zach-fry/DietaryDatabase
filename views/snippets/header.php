@@ -38,7 +38,7 @@
 					<?php } ?>
 				</div>
 			</nav>
-			<form name="main_search" id="main_search" method="POST" action="search">
+			<form name="main_search" id="main_search" method="POST" action="/search">
 				<input type="text" name="keywords" placeholder="search..." />
 			</form>
 		</header>
