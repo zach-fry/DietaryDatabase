@@ -90,10 +90,9 @@
 			);
 			
 			$this->qs = $qs;
-			
 			$this->res = @mysql_query ( $qs, $this->dh );
 			if ( $this->res === FALSE ) {
-                echo mysql_error();
+		                echo mysql_error();
 				$this->status = 0;
 				return false;
 			}

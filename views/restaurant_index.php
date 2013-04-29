@@ -1,4 +1,5 @@
 <?php include ('/var/www/views/snippets/header.php'); ?>
+
 <section>
     <h1>Restaurant Listings</h1>
 
@@ -17,12 +18,20 @@
         </thead>
         <tbody>
             <?php foreach ( $site->getRestaurants() as $r) { ?>
+			<?php
+				// explode tags and style them as blobs
+				$tags = explode ( ", ", $r->blurb );
+			?>
             <tr>
                 <td class="tablist-w45">
                 <a href="/restaurant/<?php echo $r->id;?>"><?php echo $r->name;?></a>
-                <p><?php echo $r->blurb; ?></p>
+                <p>
+					<?php foreach ( $tags as $t ) { ?>
+						<a href="/tag/<?php echo $t; ?>" class="tag-blob"><?php echo $t; ?></a>
+					<?php } ?>
+				</p>
                 </td>
-                <td class="tablist-loc centered">
+                <td class="tablist-loc">
                     <?php   
                         echo $r->address;
                     ?>

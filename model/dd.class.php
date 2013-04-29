@@ -34,7 +34,8 @@
             from `product` p
             where (p.name like '%". $search_term ."%')) as p, `p_comment` c
             where p.`id` = c.`product`
-		group by p.`id`, p.`name`, p.`company`, p.`description`, p.`tags`;
+            group by p.`id`, p.`name`, p.`company`, p.`description`, p.`tags`
+            order by name
             ";
         }
         else {
@@ -48,7 +49,8 @@
             select p.`id` as id, p.`name` as name, p.`company` as company, p.`description` as description, p.`tags` as tags, avg(c.`p_text`) as avg_text, avg(c.`p_qual`) as avg_qual, avg(c.`p_gfre`) as avg_gfre
             from `product` p, `p_comment` c
             where p.`id` = c.`product`
-		group by p.`id`, p.`name`, p.`company`, p.`description`, p.`tags`;
+            group by p.`id`, p.`name`, p.`company`, p.`description`, p.`tags`
+            order by name
             ";
         }
 	    if ( !$this->db->q ( $q ) ) {
@@ -69,15 +71,16 @@
                 from (select *
                 from `restaurant` r
                 where (r.name like '%". $search_term ."%')) as r left outer join `r_comment` c on 
-                    r.`id` = c.`restaurant`
-                    where c.`id` is null
-                    union
-                    select r.`id`, r.`blurb`, r.`name` as name, avg(c.`r_serv`) as avg_serv, avg(c.`r_qual`) as avg_qual, avg(c.`r_pric`) as avg_pric, avg(c.`r_gfrel`) as avg_gfrel
-                    from (select *
-                    from `restaurant` r
-                    where (r.name like '%". $search_term ."%')) as r, `r_comment` c
+                r.`id` = c.`restaurant`
+                where c.`id` is null
+                union
+                select r.`id`, r.`blurb`, r.`name` as name, avg(c.`r_serv`) as avg_serv, avg(c.`r_qual`) as avg_qual, avg(c.`r_pric`) as avg_pric, avg(c.`r_gfrel`) as avg_gfrel
+                from (select *
+                from `restaurant` r
+                where (r.name like '%". $search_term ."%')) as r, `r_comment` c
                 where r.`id` = c.`restaurant`    
-		group by r.`id`, r.`name`, r.`blurb`
+                group by r.`id`, r.`name`, r.`blurb`
+                order by name
             ";
         }
         else {
@@ -91,7 +94,8 @@
                 SELECT r.`id` , r.`blurb` , r.`name` AS name, avg( c.`r_serv` ) AS avg_serv, avg( c.`r_qual` ) AS avg_qual, avg( c.`r_pric` ) AS avg_pric, avg( c.`r_gfrel` ) AS avg_gfrel, r.`address` as address
                 FROM `restaurant` r, `r_comment` c
                 WHERE r.`id` = c.`restaurant`
-		group by r.`id`, r.`name`, r.`blurb`; 
+                group by r.`id`, r.`name`, r.`blurb`
+                order by name
             ";
         }
  
@@ -142,7 +146,7 @@
 			return false;
 		if ( !$u->password_is ( $pass ) )
 			return false;
-
+		$_SESSION['user'] = $u;
 		return $u;
 
 	}

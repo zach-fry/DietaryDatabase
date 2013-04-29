@@ -49,14 +49,13 @@
 
 	public function getById ( $id ) {
 
-		if ( !isset ( $id ) || !is_int ( $id ) ) return FALSE;
-
-        $q =  "select * from `user` where id = $id limit 1";
-        $this->db()->q($q, $id);
-        if ( !$this->db()->num() ) {
-           return FALSE;
-        }
-
+		$id = intval ( $id );
+	        $q =  "select * from `user` where id = $id limit 1";
+	        $this->db()->q($q, $id);
+        	if ( !$this->db()->num() ) {
+	           return FALSE;
+        	}
+	
 		$res = $this->db()->pop();
 		$this->id = $res['id'];
 		$this->email = $res['email'];
@@ -77,7 +76,6 @@
 		if ( !$this->db()->q ( $q, $username ) )
 			return FALSE;
 		$res = $this->db()->pop();
-
 		$this->id = $res['id'];
 		$this->email = $res['email'];
 		$this->username = $res['username'];
@@ -111,14 +109,24 @@
 
 	}
 
+	public function isAFavoriteProduct ( $pid ) {
+
+		$q = "select * from `p_favorite` where user = ? and 
+			product = ? limit 1";
+
+		$this->db()->q( $q, $this->id, intval ( $pid ) );
+		return $this->db()->num() ? TRUE : FALSE;
+
+	}
+
 	public function getFavoriteProducts ( $num = 5 ) {
 
 		$q = "select * from `p_favorite` where user = ? limit ?";
-		$this->db()->q( $this->id, $num );
+		$this->db()->q( $q, $this->id, $num );
 		$retval = array();
 		if ( !$this->db()->num() ) return $retval;
 
-		while ( $result = $this->db()->pop() ) {
+		foreach ( $this->db()->pop_all() as $result ) {	
 			$p = new Product();
 			if ( $p->getById ( $result['product'] ) )
 				$retval .= $p;
@@ -146,17 +154,29 @@
 
 	}
 
+	public function isAFavoriteRestaurant ( $pid ) {
+
+		$q = "select * from `r_favorite` where user = ? and 
+			restaurant = ? limit 1";
+
+		$this->db()->q( $q, $this->id, intval ( $pid ) );
+		return $this->db()->num() ? TRUE : FALSE;
+
+	}
+
+
 	public function getFavoriteRestaurants ( $num = 5 ) {
 
-		$q = "select * from r_favorite where user = ? limit ?";
-		$this->db()->q ( $this->id, $num );
+		$q = "select * from `r_favorite` where user = ? limit ?";
+		$this->db()->q ( $q, $this->id, $num );
+
 		$retval = array();
 		if ( !$this->db()->num() ) return $retval;
-		
-		while ( $result = $this->db()->pop() ) {
+	
+		foreach ( $this->db()->pop_all() as $result ) {
 			$r = new Restaurant ();
 			if ( $r->getById ( $result['restaurant'] ) )
-				$retval .= $r;
+				array_push ( $retval, $r );
 		}
 
 		return $retval;

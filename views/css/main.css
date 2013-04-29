@@ -20,6 +20,12 @@
 		color: #111;
 	}
 
+	
+	label {
+		font-size: 16px;
+		color: #555;
+	}
+
 	body > header {
 		background-color: #734854;
 		color: #EEE;
@@ -118,6 +124,22 @@
 	.tablist-loc { width: 15%; }
 	.tablist-w45 { width: auto; }
 
+	.tag-blob {
+		font-weight: normal;
+		display: block;
+		float: left;
+		padding: 3px 5px;
+		background-color: rgba(128, 128, 128, 0.2);
+		margin: 0 5px 5px 0;
+		font-size: 80%;
+		border-radius: 3px;
+		text-decoration: none;
+	}
+
+	.tablist .tag-blob:hover {
+		background-color: rgba(128,128,128,0.5);
+	}
+
 	tbody .tablist-rating {
 		font-size: 36px;
 		text-align: center;
@@ -162,6 +184,10 @@
 	.two-col img {
 		max-height: 50%;
 		max-width: 50%;
+	}
+
+	.two-col input {
+		width: 65%;
 	}
 
 	.rating-box-container .reviews-container {
@@ -214,6 +240,17 @@
 		width: 125%; 
 	}
 
+	.w75 b {
+		width: 100px;
+		font-size: 18px;
+	}
+
+	.w75 select {
+		width: 75px;
+		margin: 0 10px;
+		font-size: 18px;
+	}
+
 	a.button {
 		padding: 8px;
 		margin-top: 10px;
@@ -230,3 +267,86 @@
 	}
 
 
+	a#favorite-button {
+		text-align: left;
+		padding-left: 50px;
+		background: url('/views/img/add_favorite.png') 4px 4px no-repeat #736366;
+		font-size: 18px;
+	}
+
+	a#favorite-button:hover { background-color: #999; }
+
+	a#favorite-button-pushed {
+		background: url('/views/img/favorite.png') 5px 5px no-repeat #999;
+		padding-left: 50px;
+		font-size: 18px;
+	}
+
+	img.restaurant-thumbnail {
+		display: block;
+		margin: 10px auto;
+	}	
+
+	.tag-cloud {
+		padding: 15px;
+	}
+
+
+	/* reviews */
+
+	.reviews-container {}
+
+	.reviews-container .review {		
+		background-color: #D9D7C5;
+		padding: 0;
+		overflow: auto;
+		margin-bottom: 25px;
+	}
+
+	.review > header {
+		background-color: #A69580;
+		padding: 10px;
+		color: #fff;
+		overflow: auto;
+	}
+
+	.review > header .review-author {
+		font-weight: bold;
+		text-decoration: none;
+	}
+
+	.review > header .timestamp { float: right; }
+
+	.review .review-text {
+		padding: 10px 10px 40px 10px;
+		min-height: 50px;
+	}
+
+	.review .review-text .review-figures {
+		float: right;
+		text-align: center;
+	}
+
+	.review .review-text .review-figures .aspect {
+		float: left;
+		width: 75px;
+	}
+
+	.review .review-text .review-figures .aspect:nth-child(2n) {
+		background-color: rgba(128,128,128,0.3);
+	}
+
+	.review .review-text .review-figures .aspect:nth-child(2n+1) {
+		background-color: rgba(128,128,128,0.6);
+	}
+
+	.review .review-text .review-figures .aspect .aspect-title {
+		font-weight: bold;
+		background-color: rgba(128,128,128,0.1);
+		display: block;
+	}
+
+	.review .review-text .review-figures .aspect .aspect-rating {
+		font-size: 24px;
+		display: block;
+	}

@@ -1,4 +1,7 @@
 <?php include ('/var/www/views/snippets/header.php'); ?>
+<?php if ( isset ( $_SESSION['req']['status'] ) && $_SESSION['req']['status'] === 0 ) { ?>
+	<div class="notice error"><?php echo $_SESSION['req']['message']; ?></div>
+<?php } ?>
 		<section>
 			<h1>Register</h1>
 			<form name="register" method="POST" action="/register" class="full-width">

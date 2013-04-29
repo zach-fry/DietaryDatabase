@@ -17,49 +17,120 @@
 
 	same thing, but with restaurants
 -->
+<?php $u = $_SESSION['user']; ?>
+<h1>Username</h1>
+<form name="update-profile" method="post" action="profile">
+	<h2>Account Information</h2>
+	<div class="two-col">
+		<div class="two-col-left">
+			<label for="username">Username</label>
+			<input type="text" name="username" disabled value="<?php echo $u->username; ?>"/>
+			<label for="email">E-mail address</label>
+			<input type="text" name="mail" value="<?php echo $u->email; ?>" />
+			<label for="password">Change password</label>
+			<input type="password" name="password" />
+			<label for="password2">Change password, confirm</label>
+			<input type="password" name="password2" />
+		</div>
+	
+		<div class="two-col-right">
+			<label for="why_gf">My gluten-free status</label>
+			<select name="why_gf">
+				<option value="0">I have celiac disease.</option>
+				<option value="1">I have a wheat allergy.</option>
+				<option value="2">I have idiopathic gluten intolerance.</option>
+				<option value="3">Someone I love has a gluten intolerance.</option>
+				<option value="4">I'm interested in learning more about gluten intolerance.</option>
+			</select>
+			<label for="blurb">Blurb</label>
+			<textarea name="blurb" style="width:100%;height:200px;"><?php echo $_SESSION['user']->blurb; ?></textarea>
+		</div>
+	
+	</div>
+		<a href="javascript:document.forms['update-profile'].submit()" class="button">Update profile</a>
+</form>
+
+<?php
+	$u = new User();
+	$u->getById( $_SESSION['user']->id );
+?>
+
+<section>
+    <h1>My Favorite Restaurants</h1>
+
+    <table class="tablist">
+        <caption></caption>
+        <thead>
+            <tr>
+                <th class="tablist-w45">Restaurant</th>
+                <th class="tablist-loc">Location</th>
+                <th class="tablist-rating">GF Reliability</th>
+                <th class="tablist-rating">Service</th>
+                <th class="tablist-rating">Quality</th>
+                <th class="tablist-rating">Price</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ( $u->getFavoriteRestaurants() as $r) { ?>
+                        <?php  
+                                // explode tags and style them as blobs
+                                $tags = explode ( ", ", $r->blurb );
+                        ?>
+            <tr>
+                <td class="tablist-w45">
+                <a href="/restaurant/<?php echo $r->id;?>"><?php echo $r->name;?></a>
+                <p>
+                                        <?php foreach ( $tags as $t ) { ?>
+                                                <a href="/tag/<?php echo $t; ?>" class="tag-blob"><?php echo $t; ?></a>
+                                        <?php } ?>
+                                </p>
+                </td>
+                <td class="tablist-loc">
+                    <?php
+                        echo $r->address;
+                    ?>
+                </td>
+                <?php $ratings = $r->getRatings(); ?>
+                <td class="tablist-rating"><?php echo number_format($ratings['gfrel'], 2); ?></td>
+                <td class="tablist-rating"><?php echo number_format($ratings['serv'], 2); ?></td>
+                <td class="tablist-rating"><?php echo number_format($ratings['qual'], 2); ?></td>
+                <td class="tablist-rating"><?php echo number_format($ratings['pric'], 2); ?></td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</section>
+
+<section>
+<pre></pre>
+    <h1>My Favorite Groceries</h1>
+
+    <table class="tablist">
+        <caption></caption>
+        <thead>
+            <tr>
+                <th class="tablist-w45">Grocery Product</th>
+                <th class="tablist-rating">Texture</th>
+                <th class="tablist-rating">Quality</th>
+                <th class="tablist-rating">GF Reliability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ( $u->getFavoriteProducts(10) as $p) { ?>
+            <tr>
+                <td class="tablist-w45">
+                    <a href="/grocery/<?php echo $p['id'];?>"><?php echo $p['name']." - ".$p['company']; ?></a>
+                    <p><?php echo $p['description'] ?></p>
+                </td>
+                <td class="tablist-rating"><?php echo number_format($p['avg_text'], 2); ?></td>
+                <td class="tablist-rating"><?php echo number_format($p['avg_qual'], 2); ?></td>
+                <td class="tablist-rating"><?php echo number_format($p['avg_gfre'], 2); ?></td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</section>
 
 
-		<section>
-
-            <!--
-			<h1>Restaurants</h1>
-			<table class="tablist">
-				<caption></caption>
-				<thead>
-					<tr>
-						<th class="tablist-w45">Restaurant</th>
-						<th class="tablist-loc">Location</th>
-						<th class="tablist-rating">Service</th>
-						<th class="tablist-rating">Quality</th>
-						<th class="tablist-rating">GF Reliability</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php for ( $i = 0; $i < 10; $i++ ) { ?>
-					<tr>
-						<td class="tablist-w45">
-							<a href="#">Restaurant Name</a>
-							<p>100-percent gluten free dedicated facility. Come in for a meal, a delicious baked good, or even to do your gluten-free grocery shopping.</p>
-						</td>
-						<td class="tablist-loc centered">
-							Latham, NY<br />
-							<span class="relative-distance">~3mi away</span>
-						</td>
-						<td class="tablist-rating">7.5</td>
-						<td class="tablist-rating">9.0</td>
-						<td class="tablist-rating">9.1</td>
-					</tr>
-					<?php } ?>
-				</tbody>
-			</table>
-            --!>
-			<h1>Basic Style Test</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Cras sed tortor est</a>. Praesent at tempor felis. Cras sollicitudin adipiscing tempus. In hac habitasse platea dictumst. Aenean imperdiet, erat quis auctor sollicitudin, eros ante ornare mauris, ac accumsan est tortor sed nulla. Donec id adipiscing lorem. Donec ac sollicitudin mauris. Vestibulum ullamcorper tristique tellus, nec rutrum purus vulputate sit amet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Aliquam in odio sed eros mattis dictum. Maecenas vitae nisl nibh, sed iaculis orci. Aliquam a diam eu tellus cursus rhoncus.</p>
-
-		<ul>
-			<?php for ( $i = 0; $i < 10; $i++ ) { ?>
-			<li><?php echo rand ( 2, 25 ) . " bottles of beer on the wall"; ?></li>
-			<?php } ?>
-		</ul>
-		</section>
 <?php include ('/var/www/views/snippets/footer.php'); ?>

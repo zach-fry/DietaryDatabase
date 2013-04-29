@@ -1,7 +1,6 @@
 <?php
 
     ini_set ( 'display_errors', 1 );
-    // ini_set ( 'include_path', '.' );
 
     require ( './config.php' );
     require ( './model/mysqldb.class.php' );
@@ -109,8 +108,8 @@
                     }
                 break;
 
-                case 'user':
-                    require ( './views/user.php' );
+                case 'profile':
+                    require ( './views/profile.php' );
                 break;
 
                 case 'search':
@@ -151,16 +150,58 @@
                         // appropriate message
                         // (always invoke that view)
                         
-                        if (  $site->registerUserAccount( $_POST['username'], $_POST['password'], $_POST['email'] ) ) {
-                            $_SESSION['req']['status'] = 1;
-                        }
-
-
                     }
 
-                    require ( './views/register.php' );
+					// if successful, login and go to index
+
+					if ( $site->registerUserAccount ( $_POST['username'], $_POST['password'], $_POST['email'] ) ) {
+
+						$site->userLogin ( $_POST['username'], $_POST['password'] );
+						header ( "Location: /" );
+						exit();
+
+					}
+
+					// otherwise show register view with error set	
+
+					require ( "views/register.php" );
 
                 break;
+
+		case 'product-favorite':
+
+			header ( "Content-type: text/plain" );
+			if ( $_GET['action'] == "add" ) {
+				if ( $_SESSION['user']->addFavoriteProduct ( $_GET['id'] ) ) 
+					echo "1";
+				else
+					echo "0";
+			} else if ( $_GET['action'] == "remove" ) {
+				if ( $_SESSION['user']->removeFavoriteProduct ( $_GET['id'] ) )
+					echo "1";
+				else
+					echo "0";
+			}
+
+		break;
+
+		case 'restaurant-favorite':
+
+			header ( "Content-type: text/plain" );
+			if ( $_GET['action'] == "add" ) {
+				if ( $_SESSION['user']->addFavoriteRestaurant ( $_GET['id'] ) ) 
+					echo "1";
+				else
+					echo "0";
+			} else if ( $_GET['action'] == "remove" ) {
+				if ( $_SESSION['user']->removeFavoriteRestaurant ( $_GET['id'] ) )
+					echo "1";
+				else
+					echo "0";
+			}
+
+
+		break;
 
                 case 'login':
 

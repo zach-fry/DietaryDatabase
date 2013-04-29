@@ -4,18 +4,16 @@
 		<meta charset=utf-8 />
 		<title></title>
 		<link rel="stylesheet" type="text/css" media="screen" href="/views/css/main.css" />
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css' />
+		<script type="text/javascript" src="/views/js/jquery-2.0.0.min.js"></script>
+		<script type="text/javascript" src="/views/js/main.js"></script>
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
 	</head>
 	<body>
-    <!--
-	<pre>
-		<?php print_r ( $_SESSION['user'] ); ?>
-    </pre>
-    --!>
+    
 		<header>
 			<hgroup>
 				<h1>Dietary Databases</h1>
@@ -25,14 +23,14 @@
 				<a href="/">Home</a>
 				<a href="/restaurant">Restaurants</a>
 				<a href="/grocery">Groceries</a>
-				<a href="/user">My Profile</a>
 				<a href="#">About</a>
 				<div class="user-nav">
 					<?php if ( !isset ( $_SESSION['user'] ) ) { ?>
 					<a href="/login">Login</a>
 					<a href="/register">Register</a>
 					<?php } else { ?>
-					<a href="/user">
+					<a href="/logout">Logout</a>
+					<a href="/profile">
 						<?php echo $_SESSION['user']->username; ?>
 					</a>
 					<?php } ?>

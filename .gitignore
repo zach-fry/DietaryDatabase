@@ -4,4 +4,5 @@ projectSpace
 *.swo
 .htaccess
 hobbes-data
-
+config.php
+inventors_studio
