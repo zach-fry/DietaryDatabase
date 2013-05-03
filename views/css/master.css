@@ -1,0 +1,97 @@
+body {}
+html {}
+
+div.main-screen {
+    position : absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: #FFFFFF;
+    padding: 10px;
+}
+
+div.sign-in {
+    position : fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
+    border: 1px solid #000000;
+    background-color: #CCCCCC;
+    text-align: right;
+    z-index: 100;
+}
+
+div.search-results-box{
+    position : relative;
+    left: auto;
+    right: auto;
+    bottom: 0px;
+    top: 0px;
+    border: 1px solid #000000;
+    background-color: #880088;
+    overflow: auto;
+}
+
+div.search-results {
+    position:relative;
+    top: auto;
+    left: 0px;
+    height: 150px;
+    padding: 10px;
+    overflow: auto;
+}
+
+div.result-text {
+    position:absolute;
+    top: 0;
+    left: 160px;
+    height: 150px;
+    padding: 10px;
+    overflow: auto;
+}
+
+#grocery-pic {
+    width: 150px;
+    height: 150px; 
+    border: 1px solid #000000;
+    display: block;
+    margin-left: 0; 
+    margin-right : auto;
+}
+
+#restaurant-pic {
+    width: 150px;
+    height: 150px; 
+    border: 1px solid #000000;
+    display: block;
+    margin-left: 0; 
+    margin-right : auto;
+}
+
+#logo {
+    width: 600px;
+    height: 200px; 
+    border: 1px solid #000000;
+    display: block;
+    margin-left: auto; 
+    margin-right : auto;
+}
+
+#grocery_products {
+    background : #DE0052;
+    color : #FFFFFF;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#restaurants {
+    background : #4C10AE;
+    color : #FFFFFF;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
